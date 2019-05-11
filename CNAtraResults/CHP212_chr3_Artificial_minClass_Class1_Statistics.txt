@@ -1,0 +1,3 @@
+Chromosome	#IBs	#CNVs	#Amplifications	#Deletions	Class2	Class1 
+chr3	2	84	34	50	79	5 
+genome	2	84	34	50	79	5 
