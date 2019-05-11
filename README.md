@@ -7,14 +7,9 @@ CNAtra accepts BAM/SAM files as input. It can handle both single-end and paired-
 User can run CNAtra tool and get the CNV profile quickly using the default parameters if the BAM file is available. We provide the simulated Chr3  of CHP-212 cell line as an example. Input BAM is available as "CHP212_chr3_Artificial.bam" file under "CNAtraInput" folder. CNAtra outputs are provided in "CNAtraResults" folder (default output directory). 
 
 ​			*>> CNAtraDirectory = './CNAtraTool';*
-
 ​			*>> addpath(CNAtraDirectory);*
-
 ​			*>> inputFile = ' ./CNAtraInput/CHP212_chr3_Artificial.bam';*
-
 ​			*>> CNAtraObj = CNAtra(inputFile, CNAtraDirectory);*
-
 ​			*>> CNAtraObj.RDcalculator;*
-
 ​			*>> CNAtraObj.CNVcaller;*
 
