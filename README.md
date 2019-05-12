@@ -10,7 +10,7 @@ User can run CNAtra tool and get the CNV profile quickly using the default param
 
 ​			*>> addpath(CNAtraDirectory);*
 
-​			*>> inputFile = ' ./CNAtraInput/CHP212_chr3_Artificial.bam';*
+​			*>> inputFile = './CNAtraInput/CHP212_chr3_Artificial.bam';*
 
 ​			*>> CNAtraObj = CNAtra(inputFile, CNAtraDirectory);*
 
