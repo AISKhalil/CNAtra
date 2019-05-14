@@ -185,10 +185,6 @@ targetChr = chrNames(targetChrIndex);
 switch abs(obj.minAlterationRank)
 	case 5
 	    minimumClass = 'Class2';
-	case 4
-	    minimumClass = 'Eiffel';
-	case 3 
-	    minimumClass = 'Manhattan';
 	case 2 
 	    minimumClass = 'Class1';                                    
 	otherwise

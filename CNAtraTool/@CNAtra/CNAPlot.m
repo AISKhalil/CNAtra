@@ -189,18 +189,7 @@ xlabel('bin Number');
 title(targetChr);
 hold off;
 %%%%%%%%%%%%%%%%%
-    %subplot(3,1,3);
-    %hold on;
-    %plot(plotIndices, regionsCategoryVector(plotIndices),'g');
-    %plot(plotIndices, regionsCategoryVector3(plotIndices),'c');
-    %plot(plotIndices, regionsCategoryVector4(plotIndices),'b');
-    %plot(plotIndices, regionsCategoryVector5(plotIndices),'r');
-%ylabel('Region Category');
-%xlabel('bin Number');    
-%lgd= legend('Class1','Manhattan', 'Eiffel', 'Class2', 'Orientation', 'horizontal');
-%lgd.FontSize = 7;
-%ylim([-6 6])
-%%%
+ 
 dir = obj.outputDirectory;
 if(exist(dir,'dir') ~= 7)
     mkdir(dir);
@@ -212,10 +201,6 @@ targetChr = chrNames(targetChrIndex);
 switch abs(obj.minAlterationRank)
 case 5
     minimumClass = 'Class2';
-case 4
-    minimumClass = 'Eiffel';
-case 3 
-    minimumClass = 'Manhattan';
 case 2 
     minimumClass = 'Class1';                                    
 otherwise

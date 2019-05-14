@@ -192,7 +192,6 @@ hold off;
 
 
 %%%------ saving output-figure --------%%%
-%%%
 dir = obj.outputDirectory;
 if(exist(dir,'dir') ~= 7)
     mkdir(dir);
@@ -204,10 +203,6 @@ targetChr = chrNames(targetChrIndex);
 switch abs(obj.minAlterationRank)
 case 5
     minimumClass = 'Class2';
-case 4
-    minimumClass = 'Eiffel';
-case 3 
-    minimumClass = 'Manhattan';
 case 2 
     minimumClass = 'Class1';                                    
 otherwise

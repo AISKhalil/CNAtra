@@ -238,6 +238,8 @@ classdef CNAtra < handle
 		%Ploidy-Test
 		ploidyTest(obj)
 
+		%Plot genome RD signal
+		plotGenome(obj, binSize)
 
     end
     %%% 
