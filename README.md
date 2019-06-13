@@ -1,7 +1,8 @@
-# CNAtra
-is a MATLAB-based CNV detection tool for detecting large-scale segmental aneuploidies and focal amplifications/deletions of low-coverage cancer genomes. For more information please visit [CNAtra Manuscript](https://www.biorxiv.org/content/10.1101/639294v1?rss=1).
+# CNAtra: a MATLAB-based CNV detection tool for detecting large-scale segmental aneuploidies and focal amplifications/deletions of low-coverage cancer genomes. 
 
 `CNAtra` accepts BAM/SAM files as input. It can handle both single-end and paired-end WGS reads. `CNAtra` pipeline has two modules: 1. Read depth calculator and 2. CNV caller. `CNAtra` generates many output files providing the detailed characterization of the copy number profile of the input data. It saves BED format files of both large-scale copy number variations (LCVs) and focal alterations (FAs) that can be uploaded into UCSC Genome Browser. In addition, `CNAtra` incorporates a visual platform that allows manual review of the CNV profile and its accessory information such as the mappability score. The detailed description of `CNAtra` inputs, parameters, methods, and outputs are provided in **"CNAtra_User_Guide.pdf"** file.
+
+**For more information please visit [CNAtra Manuscript](https://www.biorxiv.org/content/10.1101/639294v1?rss=1).
 
 ## CNAtra output at a glance
 
