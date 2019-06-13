@@ -14,7 +14,7 @@ cd ~
 git clone https://github.com/AISKhalil/CNAtra.git
 ```
 
-After cloning CNAtra git repository, user can run the following commands using MATLAB to get the CNV profile.
+### MATLAB to get the CNV profile of bam file
 
 ​			*>> CNAtraDirectory = './CNAtraTool';*
 
