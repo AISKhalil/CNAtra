@@ -4,7 +4,16 @@ CNAtra accepts BAM/SAM files as input. It can handle both single-end and paired-
 
 **CNAtra output at a glance**
 
-User can run CNAtra tool and get the CNV profile quickly using the default parameters if the BAM file is available. We provided the simulated data where we artificially incorporated LCVs and FAs in Chr3 of CHP-212 cell line data as an example for testing CNAtra installation. Input BAM is available as "CHP212_chr3_Artificial.bam" file under "CNAtraInput" folder. CNAtra outputs were provided in "CNAtraResults" folder (default output directory). After cloning CNAtra git repository, user can run the following commands using MATLAB to get the CNV profile.
+User can run CNAtra tool and get the CNV profile quickly using the default parameters if the BAM file is available. We provided the simulated data where we artificially incorporated LCVs and FAs in Chr3 of CHP-212 cell line data as an example for testing CNAtra installation. Input BAM is available as "CHP212_chr3_Artificial.bam" file under "CNAtraInput" folder. CNAtra outputs were provided in "CNAtraResults" folder (default output directory). 
+
+### Download CNAtra from github
+
+```bash
+cd ~
+git clone https://github.com/AISKhalil/CNAtra.git
+```
+
+After cloning CNAtra git repository, user can run the following commands using MATLAB to get the CNV profile.
 
 ​			*>> CNAtraDirectory = './CNAtraTool';*
 
