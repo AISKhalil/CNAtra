@@ -14,7 +14,7 @@ cd ~
 git clone https://github.com/AISKhalil/CNAtra.git
 ```
 
-### Use MATLAB to get the CNV profile of bam file
+### Use MATLAB to get the CNV profile of BAM file
 
 ```bash
 >> CNAtraDirectory = './CNAtraTool';*
