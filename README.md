@@ -17,15 +17,10 @@ git clone https://github.com/AISKhalil/CNAtra.git
 ### Use MATLAB to get the CNV profile of bam file
 
 ```bash
-​			*>> CNAtraDirectory = './CNAtraTool';*
-
-​			*>> addpath(CNAtraDirectory);*
-
-​			*>> inputFile = './CNAtraInput/CHP212_chr3_Artificial.bam';*
-
-​			*>> CNAtraObj = CNAtra(inputFile, CNAtraDirectory);*
-
-​			*>> CNAtraObj.RDcalculator;*
-
-​			*>> CNAtraObj.CNVcaller;*
+>> CNAtraDirectory = './CNAtraTool';*
+>> addpath(CNAtraDirectory);*
+>> inputFile = './CNAtraInput/CHP212_chr3_Artificial.bam';*
+>> CNAtraObj = CNAtra(inputFile, CNAtraDirectory);*
+>> CNAtraObj.RDcalculator;*
+>> CNAtraObj.CNVcaller;*
 ```
