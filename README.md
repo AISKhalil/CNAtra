@@ -24,10 +24,27 @@ User can run **CNAtra** tool and get the CNV profile quickly using the default p
 
 Start Matlab, then edit and run the following set of commands based on your data.
 ```bash
+% Add 'CNAtraTool' directory to Matlab search path
 CNAtraDirectory = './CNAtraTool';
 addpath(CNAtraDirectory);
+
+% Define the input file
 inputFile = './CNAtraInput/CHP212_chr3_Artificial.bam';
+
+% Create CNAtra object 'CNAtraObj' with the defined parameters
 CNAtraObj = CNAtra(inputFile, CNAtraDirectory);
+
+% run 'RD calculator' module (Pipeline stage 1)
 CNAtraObj.RDcalculator;
+
+% run 'CNV caller' module (Pipeline stage 2)
 CNAtraObj.CNVcaller;
+
+% save the CNAtraObject, so you can load it directly for further analysis.
+save('CNAtraResults/CHP212_WGS.mat');
+
+% plot the CNV tracks (e.g chr3)
+chrNumber = 3;
+CNAtraObj.CNVsTrackPlot('plot',chrNumber);
+
 ```
