@@ -15,8 +15,8 @@ git clone https://github.com/AISKhalil/CNAtra.git
 ```
    
 ### <a name="annotations"></a>Annotations  
-- **CNAtra** also uses the unique mappability tracks for computing the mappability scores that are used for correcting the Hi-C/3C-seq contact map  [Unique mappability tracks for several species](https://sites.google.com/site/anshulkundaje/projects/mappability). This includes per-base unique mappability tracks for a large range of read lengths for several key species [Umap and Bismap: quantifying genome and methylome mappability](https://academic.oup.com/nar/article/46/20/e120/5086676). 
-- Additionally, **CNAtra** computes the GC score, for correcting the Hi-C/3C-seq contact maps, from the Chris Miller's pre-calculated tracks [GC tracks](https://xfer.genome.wustl.edu/gxfer1/project/cancer-genomics/readDepth/index.html). This includes the GC tracks for a large range of read lengths for human genome [ReadDepth](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0016327). 
+- **CNAtra** uses the unique mappability tracks for computing the mappability scores that are used for correcting the RD signal [Unique mappability tracks for several species](https://sites.google.com/site/anshulkundaje/projects/mappability). This includes per-base unique mappability tracks for a large range of read lengths for several key species [Umap and Bismap: quantifying genome and methylome mappability](https://academic.oup.com/nar/article/46/20/e120/5086676). 
+- Additionally, **CNAtra** computes the GC score, for normalizing the RD signal, from the Chris Miller's pre-calculated tracks [GC tracks](https://xfer.genome.wustl.edu/gxfer1/project/cancer-genomics/readDepth/index.html). This includes the GC tracks for a large range of read lengths for human genome [ReadDepth](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0016327). 
 - All the annotation files are included in CNAtra software
 
 ### <a name="CNAtra_Example"></a>CNAtra output at a glance
