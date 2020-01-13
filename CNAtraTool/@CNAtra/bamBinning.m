@@ -27,24 +27,32 @@ if strcmp(extension,'.bam')
 else
     fileInfo= saminfo(rdFile,'ScanDictionary', 'true', 'numofreads', 'true');%% 
 end
-chrLengths = [fileInfo.SequenceDictionary.SequenceLength];
-chrNames   = [fileInfo.ScannedDictionary];
+chrLengthsBAM = [fileInfo.SequenceDictionary.SequenceLength];
+chrNamesBAM   = [fileInfo.ScannedDictionary];
 
 %%%%--- Removing Chromosomes Y & M if exist ---%%%%
-UnMapped_index = find(strcmp(chrNames,'Unmapped'));
-if(~isempty(UnMapped_index))
-    chrNames(UnMapped_index)= [];
-end  
-chrY_index = find(strcmp(chrNames,'chrY'));
-if(~isempty(chrY_index))
-    chrNames(chrY_index)= [];
-    chrLengths(chrY_index)= [];
+chrListAccepted = {'chr1','chr2','chr3','chr4','chr5','chr6','chr7','chr8','chr9','chr10','chr11','chr12','chr13','chr14','chr15','chr16','chr17','chr18','chr19','chr20','chr21','chr22','chrX'};
+%
+noChrsAccepted = 0;
+for i = 1:length(chrNamesBAM)
+    if(any(strcmp(chrListAccepted,chrNamesBAM(i))))
+        noChrsAccepted = noChrsAccepted + 1;
+    end
 end
-chrM_index = find(strcmp(chrNames,'chrM'));
-if(~isempty(chrM_index))
-    chrNames(chrM_index)= [];
-    chrLengths(chrM_index)= [];
-end    
+%
+chrNames   = cell(noChrsAccepted,1);
+chrLengths = zeros(1,noChrsAccepted);
+%
+j = 1;
+for i = 1:length(chrNamesBAM)
+    if(any(strcmp(chrListAccepted,chrNamesBAM(i))))
+        chrIndex = find(strcmp(chrListAccepted,chrNamesBAM(i)));
+        chrNames{j} = chrNamesBAM{i};
+        chrLengths(j) = chrLengthsBAM(i);
+        j = j+1;
+    end
+end
+
 
 
 %%%%%----------- Setting Chromosomes order ------%%%%%
@@ -138,11 +146,21 @@ for i = 1:1:length(chrNames)
         % Map-Quality checking
         fow_idx = find(~bitget(getFlag(BMObjFiltered1),5));%first read
         rev_idx = find(bitget(getFlag(BMObjFiltered1),5));
-        [~,hf] = sort(getHeader(BMObjFiltered1,fow_idx));
-        [~,hr] = sort(getHeader(BMObjFiltered1,rev_idx));
+        %
+        fH = getHeader(BMObjFiltered1,fow_idx);
+        rH = getHeader(BMObjFiltered1,rev_idx); 
+        [cH, fi, ri] = intersect(fH,rH);
+        %
+        fow_idx = fow_idx(fi);
+        rev_idx = rev_idx(ri);
+        fH = fH(fi);
+        rH = rH(ri);
+        %
+        [~,fi2] = sort(fH);
+        [~,ri2] = sort(rH);
         mate_idx = zeros(numel(fow_idx),1);
-        mate_idx(hf) = rev_idx(hr);%second read 
-
+        mate_idx(fi2) = rev_idx(ri2);%second read 
+        %
         fow_MAPQ_Vec = getMappingQuality(BMObjFiltered1, fow_idx);
         mate_MAPQ_Vec = getMappingQuality(BMObjFiltered1, mate_idx);
         selectedMates = (fow_MAPQ_Vec > MAPQ_Score) & (mate_MAPQ_Vec > MAPQ_Score);
