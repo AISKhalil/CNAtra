@@ -89,13 +89,13 @@ readType = '';
 noMappedReads = 0;
 noTotalbps = 0;
 
-for i = 1:1:length(chrNames)
+for i = 1:1:length(obj.chrNames)
     
     %tic;
-    disp(chrNames(i))
+    disp(obj.chrNames(i))
     %%%-Chromosome Subset-%%
     targetChrIndex = obj.targetChrs(i);
-    targetChr = chrNames(i);
+    targetChr = obj.chrNames(i);
     BMObj1_Org = BioMap(rdFile,'SelectReference', targetChr,'InMemory',inMemoryOpt);
 
 
@@ -141,7 +141,8 @@ for i = 1:1:length(chrNames)
     else 
         % Removing duplicated and unmappedMate  
         logicalVec1 = filterByFlag(BMObj1_Org, 'unmappedQuery', 'false', 'alnNotPrimary', 'false', 'failedQualCheck', 'false', 'duplicate', 'false', 'pairedInMap', 'true', 'unmappedMate', 'false', 'pairedInSeq', 'true');
-        BMObjFiltered1 = getSubset(BMObj1_Org, logicalVec1,'InMemory',inMemoryOpt);       
+        BMObjFiltered1 = getSubset(BMObj1_Org, logicalVec1,'InMemory',inMemoryOpt);  
+        clear logicalVec1     
 
         % Map-Quality checking
         fow_idx = find(~bitget(getFlag(BMObjFiltered1),5));%first read
@@ -149,7 +150,7 @@ for i = 1:1:length(chrNames)
         %
         fH = getHeader(BMObjFiltered1,fow_idx);
         rH = getHeader(BMObjFiltered1,rev_idx); 
-        [cH, fi, ri] = intersect(fH,rH);
+        [~, fi, ri] = intersect(fH,rH);
         %
         fow_idx = fow_idx(fi);
         rev_idx = rev_idx(ri);
@@ -158,8 +159,11 @@ for i = 1:1:length(chrNames)
         %
         [~,fi2] = sort(fH);
         [~,ri2] = sort(rH);
+        clear fH rH fi ri;
+        %
         mate_idx = zeros(numel(fow_idx),1);
-        mate_idx(fi2) = rev_idx(ri2);%second read 
+        mate_idx(fi2) = rev_idx(ri2);%second read
+        clear fi2 ri2;  
         %
         fow_MAPQ_Vec = getMappingQuality(BMObjFiltered1, fow_idx);
         mate_MAPQ_Vec = getMappingQuality(BMObjFiltered1, mate_idx);
@@ -174,58 +178,19 @@ for i = 1:1:length(chrNames)
             clear idx_Selected;
         end
         %%%
-        clear BMObj1_Org fow_idx rev_idx hf hr mate_idx fow_MAPQ_Vec mate_MAPQ_Vec selectedMates; 
+        clear BMObj1_Org fow_idx rev_idx mate_idx fow_MAPQ_Vec mate_MAPQ_Vec selectedMates; 
 
         %%%%%%%%%%%%%%%%%%%%%%%%
         % Fragments Constructing
-        J1 = getStop(BMObjFiltered1, fow_idx_Selected);
-        K1 = getStart(BMObjFiltered1, mate_idx_Selected);
-        L = K1 - J1 - 1; %Insert Length
-        LF = find(L>0);
-        SF = find(L <= 0);
-        
-        %%1) Long Fragments (Construct Fragments)
-        fow_idx_LF = fow_idx_Selected(LF);
-        mate_idx_LF = mate_idx_Selected(LF);
-        L_LF = L(LF);
-
-        n = numel(L_LF);
-        cigars = cell(n,1);
-        seqs   = cell(n,1);
-        for z = 1:n
-            cigars{z} = sprintf('%dN' ,L_LF(z));
-            seqs{z} = '';
+        J1 = getStart(BMObjFiltered1, fow_idx_Selected);
+        K1 = getStop(BMObjFiltered1, mate_idx_Selected);
+        %
+        cov = zeros(1,obj.chrLengths(targetChrIndex));
+        %
+        for j = 1:length(J1) 
+            cov(J1(j):K1(j)) = cov(J1(j):K1(j)) + 1;
         end
-        cigars = strcat(getSignature(BMObjFiltered1, fow_idx_LF), cigars, getSignature(BMObjFiltered1, mate_idx_LF));
-        J = getStart(BMObjFiltered1, fow_idx_LF);
-        BMObjSubset = BioMap('Sequence',seqs,'Signature',cigars,'Start',J);%New BioMap with fragments that are constructed from read ends.
-        clear fow_idx_LF mate_idx_LF L_LF cigars seqs J
- 	 	
-        %%2) Short Reads
-        fow_idx_SF = fow_idx_Selected(SF);
-        mate_idx_SF = mate_idx_Selected(SF);
-        J = getStart(BMObjFiltered1, fow_idx_SF);
-        K = getStop(BMObjFiltered1, mate_idx_SF);
-        L_SF = K-J+1;
-        n = numel(L_SF);
-        cigars = cell(n,1);
-        seqs   = cell(n,1);
-        for z = 1:n
-            cigars{z} = sprintf('%dN' ,L_SF(z));
-            seqs{z} = '';
-        end
-        BMObjSubset2 = BioMap('Sequence',seqs,'Signature',cigars,'Start',J);%New BioMap with fragments that are constructed from read ends.
-        clear  fow_idx_SF mate_idx_SF J K L_SF cigars seqs
-
-        %%%%%%%%%%%%%%%%%%%%%%%%%
-        noMappedReads = noMappedReads + BMObjSubset.NSeqs + BMObjSubset2.NSeqs;
-		% Binning
-        [cov1] = getBaseCoverage(BMObjSubset, 1, obj.chrLengths(targetChrIndex));
-        clear BMObjSubset;
-        [cov2] = getBaseCoverage(BMObjSubset2, 1, obj.chrLengths(targetChrIndex));
-        clear BMObjSubset2;
-        cov = cov1 + cov2;
-        clear cov1 cov2
+        clear J1 K1 j
         %
         a = cov;
         n = binSize;
