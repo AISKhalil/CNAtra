@@ -89,13 +89,12 @@ readType = '';
 noMappedReads = 0;
 noTotalbps = 0;
 
-for i = 1:1:length(obj.chrNames)
+for i = 1:1:length(obj.targetChrs)
     
-    %tic;
-    disp(obj.chrNames(i))
     %%%-Chromosome Subset-%%
     targetChrIndex = obj.targetChrs(i);
-    targetChr = obj.chrNames(i);
+    targetChr = obj.chrNames(targetChrIndex);
+    disp(targetChr)
     BMObj1_Org = BioMap(rdFile,'SelectReference', targetChr,'InMemory',inMemoryOpt);
 
 
