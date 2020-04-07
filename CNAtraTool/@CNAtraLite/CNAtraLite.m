@@ -145,7 +145,8 @@ classdef CNAtraLite < handle
 		%%%% ------ Visualization ------- %%%%
 		%Plot chromosome or a specific area
 		CNAPlot(obj, saveResult, varargin)
-
+		CNVsTrackPlot(obj, saveResult, varargin) 
+		
 		%Plot genome RD signal
 		plotGenome(obj, binSize)
 

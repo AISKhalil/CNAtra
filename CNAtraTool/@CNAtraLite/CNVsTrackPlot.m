@@ -1,5 +1,5 @@
-function obj = CNAPlot(obj, saveResult, varargin)  
-%Plotting the CNAtra result of a chromosome, iso-copy numeric block, or genomic region.  
+function obj = CNVsTrackPlot(obj, saveResult, varargin)  
+%Plotting the CNAtra CNV track (contructed by merging the iso-copy numeric blocks and focal amplifications/deletions) of a chromosome.  
 
 
 %% ------------- Plot Mode -------------- %%
@@ -12,12 +12,12 @@ switch nargin,
 		plotMode = 1;
 		chrNo = varargin{1};
     case 2,
-        % Mode:2, plot a segment.
+                % Mode:2, plot a segment.
 		plotMode = 2;
 		chrNo = varargin{1};
 		segmentNo = varargin{2};
 	case 3,
-		% Mode:2, plot an area of a chromosome (in Kb).
+		% Mode:3, plot an area of a chromosome (in Kb).
 		plotMode = 3;
 		chrNo = varargin{1};
         areaStart = floor(varargin{2}/obj.binSize);
@@ -32,20 +32,29 @@ else
 	saveResult = 0;
 end
 
+
+
+
+
 %% ---------------- Data --------------- %%
-chrData = obj.chrDictionary ;
 chrNames = obj.chrNames;
+chrData = obj.chrDictionary ;
 segmentsInfoDic = obj.segmentsInfoDic;
 regionsInfoDic  = obj.regionsInfoDic;
-CNReference  = obj.CNReference;
+CNReference = obj.CNReference;
 binSize = obj.binSize;
+%
+chromosomes = obj.targetChrs;
+noChrs = length(chromosomes);
+
+
 
 
 %% ----------- Processing --------------%%
 targetChrIndex = chrNo;
 targetChr = chrNames(targetChrIndex);
 
-%%%%%%%%%%%%%%% Data Reading %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Data Reading %%%%%%%
 orgData = chrData(targetChrIndex);
 copyNumber = CNReference;
 normData = orgData*2/copyNumber;
@@ -66,59 +75,47 @@ end
 
 %%----- Clipped Data -------%%
 %Clip the Read-Depth data to a maximum copyNumber of 10.
-maxCN = max(max(segmentsCN+5),10);
+maxCN = max(max(segmentsCN+2),10);
 clippedData = min(normData, maxCN);
 
-
+%%------- Regions Data  ----------%%	
 regionsCNData   = nan(clippedDataLen,1);
-regionsCNVector = segmentsCNVector;
-regionsCategoryVector = zeros(clippedDataLen,1);
-regionsCategoryVector3 = zeros(clippedDataLen,1);
-regionsCategoryVector4 = zeros(clippedDataLen,1);
-regionsCategoryVector5 = zeros(clippedDataLen,1);
-
-%%------ Regions Data  ------------%%
+regionsCNVector = segmentsCNVector;	
+%
 regionsArray = regionsInfoDic(targetChrIndex);
 [noRegions,~] = size(regionsArray);
-if(noRegions > 0)
+%
+if(noRegions > 0)	
 	regionsStart  = regionsArray(:,2);
 	regionsEnd    = regionsArray(:,3);
 	regionsCN     = regionsArray(:,5);
-	regionsCategory = regionsArray(:,6);	
+	regionsCategory = regionsArray(:,6);
 
 	for j=1:noRegions
 		regionsCNData(regionsStart(j):regionsEnd(j)) = clippedData(regionsStart(j):regionsEnd(j));
 		regionsCNVector(regionsStart(j):regionsEnd(j)) = regionsCN(j);
-		regionsCategoryVector(regionsStart(j):regionsEnd(j)) = regionsCategory(j);
-		%%
-		if(abs(regionsCategory(j))==3)
-			regionsCategoryVector3(regionsStart(j):regionsEnd(j)) = regionsCategory(j);
-		end
-		if(abs(regionsCategory(j))==4)
-			regionsCategoryVector4(regionsStart(j):regionsEnd(j)) = regionsCategory(j);
-		end
-		if(abs(regionsCategory(j))==5)
-			regionsCategoryVector5(regionsStart(j):regionsEnd(j)) = regionsCategory(j);
-		end
+		%
+		segmentsCNVector(regionsStart(j):regionsEnd(j)) = regionsCN(j);
 	end
 end
 
-%%%%%%%%%%%%%%%%%%%%%%%%%% Area Selecting for plot%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%--------- Area Selecting for plot ---------%%%
 if(plotMode == 1)
-    plotStart = 1;
-    plotEnd   = clippedDataLen;
+	plotStart = 1;
+	plotEnd   = clippedDataLen;
 elseif(plotMode == 2)
-    plotStart = segmentsStart(segmentNo);
-    plotEnd   = segmentsEnd(segmentNo);
+	plotStart = segmentsStart(segmentNo);
+	plotEnd   = segmentsEnd(segmentNo);
 elseif(plotMode == 3)
-    plotStart = max(1, areaStart);
-    plotEnd   = min(areaEnd, clippedDataLen);
+	plotStart = max(1, areaStart);
+	plotEnd   = min(areaEnd, clippedDataLen);
 end
-plotIndices = plotStart:plotEnd;
+	plotIndices = plotStart:plotEnd;
 
 
 
-%%%%%%%%%%%%%%%%%%%%%% Ploting Copy-Number regions %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%------ Ploting Copy-Number regions -------%%%
 if(saveResult == 1)
 	figure(targetChrIndex);
 	set(gcf, 'Position', [1 1 1200 600]);
@@ -127,26 +124,27 @@ else
 	figure;
 	set(gcf, 'Position', get(0, 'Screensize'));
 end
-%
-hold on;
-%
-plot(plotIndices, clippedData(plotIndices),'LineStyle','none','Marker','.', 'MarkerSize', 4,'Color', [0.4 0.4 0.4]);
-%Amplification and deletion data
-plot(plotIndices, regionsCNData(plotIndices),'b.','MarkerSize',3);
-%Amplification and deletion CN vector
-plot(plotIndices, regionsCNVector(plotIndices),'r','lineWidth',2);
-% Segments CN vector
-plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',3);
 
-legend('Read-Depth','Alteration bins', 'Alteration Copy-Number', 'Segments Copy-Number');   
+hold on;
+
+
+    %Data
+plot(plotIndices, clippedData(plotIndices),'LineStyle','none','Marker','.','Color', [0.4 0.4 0.4]);
+% Segments CN vector
+plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',4);
+
+legend('Read depth', 'Copy number');   
+ 
+plot(plotIndices, segmentsCNVector(plotIndices),'r','lineWidth',2);
 
 ylim([-0.5,maxCN]);
-ylabel('Copy number');
-xlabel('Bin Number');
+ylabel('Estimated copy number');
+xlabel('bin Number');
 title(targetChr);
 hold off;
-%%%%%%%%%%%%%%%%%
- 
+
+
+%%%------ saving output-figure --------%%%
 dir = obj.outputDirectory;
 if(exist(dir,'dir') ~= 7)
     mkdir(dir);
@@ -168,14 +166,16 @@ end
 if(saveResult == 1)
     ff = strcat('-f',num2str(targetChrIndex));
     if(plotMode == 1)
-        hh = strcat(obj.outputDirectory, '/', objFileName, '_', targetChr,'_minClass_', minimumClass);
+        hh = strcat(obj.outputDirectory, '/', objFileName, '_', targetChr,'_CNVsTrack_minClass_', minimumClass);
     else
-        hh = strcat(obj.outputDirectory, '/', objFileName, '_', targetChr,'_minClass_', minimumClass,'_from_',num2str(plotStart),'Kb_to_',num2str(plotEnd),'Kb');	
+        hh = strcat(obj.outputDirectory, '/', objFileName, '_', targetChr,'_CNVsTrack_minClass_', minimumClass,'_from_',num2str(plotStart),'Kb_to_',num2str(plotEnd),'Kb');	
     end
     print(ff,hh,'-dpng');
     savefig(hh);
     close All;
 end
+%
 
 
 end
+%%%
