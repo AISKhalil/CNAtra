@@ -35,7 +35,7 @@ For other genome, user can download and build the annotation files.
 - We provided scripts for parsing the mappability and GC tracks [manual annotation](CNAtraTool/annotations/example/example.m). 
 - For other annotation files (centromere.bed, telomere.bed, gap.bed, and blackListed.bed), user can make them using the tab-delimited format (chr name, start-bp, end-bp). Centromoeres' information should be provided for running **CNAtra**, while other files can be empty.
 
-### <a name="CNAtra_Example"></a>CNAtra output 0at a glance
+### <a name="CNAtra_Example"></a>CNAtra output at a glance
 User can run **CNAtra** tool and get the CNA profile quickly using the default parameters and hg19 annotation files if the BAM file is available. We provided the simulated data where we artificially incorporated LCVs and FAs in Chr3 of CHP-212 cell line data as an example for testing the tool installation. Input BAM is available as "CHP212_chr3_Artificial.bam" file under `CNAtraInput/` folder. **CNAtra** outputs are provided in `CNAtraResults/` folder (default output directory). 
 
 Start Matlab, then edit and run the following set of commands based on your data.
