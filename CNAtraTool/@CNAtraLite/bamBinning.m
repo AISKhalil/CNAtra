@@ -174,6 +174,7 @@ for i = 1:1:length(obj.chrNames)
         for j = 1:length(J1) 
             cov(J1(j):K1(j)) = cov(J1(j):K1(j)) + 1;
         end
+        noReads = length(J1);
         clear J1 K1 j
         %
         a = cov;
@@ -182,6 +183,7 @@ for i = 1:1:length(obj.chrNames)
         
         % Statistics        
 		noTotalbps = noTotalbps + sum(binnedData);
+		noMappedReads = noMappedReads + noReads;
 		if(i == 1)
        		readType = 'Paired-end';
         	readLength = double(length(char(BMObjFiltered1.getSequence(1))));

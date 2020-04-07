@@ -13,9 +13,9 @@ minRegionWidthForTestInBins = 15;
 
 if(obj.removeShortRegions == 1)
 	minRegionSize   = obj.resolution;
-	lowerWidthLimit = minRegionWidthForTestInBins;
+	lowerWidthLimit = min(minRegionWidthForTestInBins,minRegionSize);
 else
-	minRegionSize   = minRegionWidthForTestInBins;% minimum region size to apply the t-test
+	minRegionSize   = min(minRegionWidthForTestInBins,minRegionSize);% minimum region size to apply the t-test
 	lowerWidthLimit = minRegionSize;
 end
 
