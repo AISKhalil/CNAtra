@@ -49,7 +49,7 @@ minRegionSize = 3;%minimum size of gab/black region to be filtered.
 %--------------------------------%
 %%%% -- Black-list regions -- %%%%
 fileID = fopen(blackListFile,'r');
-blacklistRegions = textscan(fileID, '%s%f%f%s%f');
+blacklistRegions = textscan(fileID, '%s%f%f');
 chrBlackName = blacklistRegions{1};
 chrBlackStart = blacklistRegions{2};
 chrBlackEnd = blacklistRegions{3};
@@ -69,17 +69,17 @@ chrMappabilityTracks = obj.chrMappabilityTracks;
 
 %%%% Centromeres & Telomeres %%%%
 fileID = fopen(centromeresFile,'r');
-centromeresRegions = textscan(fileID, '%f%s%f%f%f%s%f%s%s');
-chrCentroName = centromeresRegions{2};
-chrCentroStart = centromeresRegions{3};
-chrCentroEnd = centromeresRegions{4};
+centromeresRegions = textscan(fileID, '%s%f%f');
+chrCentroName = centromeresRegions{1};
+chrCentroStart = centromeresRegions{2};
+chrCentroEnd = centromeresRegions{3};
 
 %%%%
 fileID = fopen(telomeresFile,'r');
-telomeresRegions = textscan(fileID, '%f%s%f%f%f%s%f%s%s');
-chrTeloName = telomeresRegions{2};
-chrTeloStart = telomeresRegions{3};
-chrTeloEnd = telomeresRegions{4};
+telomeresRegions = textscan(fileID, '%s%f%f');
+chrTeloName = telomeresRegions{1};
+chrTeloStart = telomeresRegions{2};
+chrTeloEnd = telomeresRegions{3};
 
 
 
@@ -91,14 +91,13 @@ obj.chrGapBoundaries = containers.Map({1},{[]});
 obj.chrCentroTeloBoundaries = containers.Map({1},{[]});
 obj.chrBlackListedBoundaries = containers.Map({1},{[]});
 %%%
+
 remove(obj.chrFDictionary,1);
 remove(obj.chrFIndex,1);
 remove(obj.chrGapBoundaries,1);
 remove(obj.chrCentroTeloBoundaries,1);
 remove(obj.chrBlackListedBoundaries,1);
 %%%
-
-
 
 for i=1:length(chromosomes)
     targetChrIndex = chromosomes(i);
@@ -193,7 +192,7 @@ for i=1:length(chromosomes)
             targetChrTeloEnd = [targetChrTeloEnd; TeloEndTemp];
         end
     end
-    %%% Chr17 Telomeres %%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     if (length(targetChrTeloStart)~=2)
         targetChrTeloStart = [1,targetChrLength-1];
         targetChrTeloEnd = [2,targetChrLength];

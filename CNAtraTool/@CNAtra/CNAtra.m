@@ -6,22 +6,22 @@ classdef CNAtra < handle
 		%bamFile: Input bam-formatted file to be analyzed 
 		bamFile
 
-		%gcWindsMatFile: File that contains the pre-calculated gc-contents per bin. A default hg19 file "CNAClassDirectory+/referenceFiles/AnshulMappability/gcWinds.readLength100.mat" 
+		%gcWindsMatFile: File that contains the pre-calculated gc-contents per bin. A default hg19 file "CNAClassDirectory+/annotations/hg19/AnshulMappability/gcWinds.readLength100.mat" 
 		gcWindsMatFile;
 
-		%mapMatFile: File that includes mappability scores of the genome (at 1Kb bins) which can be to filter highly repeated or unmappable regions. A default hg19-based file "CNAClassDirectory+/referenceFiles/ChrisMillerGCs/mapTracks.hg19.101.mat" is included by default if user doesn't specify one. This file can be used for Single-end reads with read length >= 100bps or Paired-end reads. For other reads, it is better to load other files (see tool documentations)	
+		%mapMatFile: File that includes mappability scores of the genome (at 1Kb bins) which can be to filter highly repeated or unmappable regions. A default hg19-based file "CNAClassDirectory+/annotations/hg19/ChrisMillerGCs/mapTracks.hg19.101.mat" is included by default if user doesn't specify one. This file can be used for Single-end reads with read length >= 100bps or Paired-end reads. For other reads, it is better to load other files (see tool documentations)	
 		mapMatFile;
 
-		%gapFile: File that includes unmappable hg19 regions. A default hg19-based file "CNAClassDirectory+/referenceFiles/hg19.gaps.bed" is included by default if user doesn't specify one.		
+		%gapFile: File that includes unmappable hg19 regions. A default hg19-based file "CNAClassDirectory+/annotations/hg19/hg19gaps.bed" is included by default if user doesn't specify one.		
 		gapFile;
 
-		%blackListFile: File that includes black-listed regions. A default hg19-based file "CNAClassDirectory+/referenceFiles/wgEncodeDacMapabilityConsensusExcludable" is included by default if user doesn't specify one.
+		%blackListFile: File that includes black-listed regions. A default hg19-based file "CNAClassDirectory+/annotations/hg19/hg19blackListed.bed" is included by default if user doesn't specify one.
 		blackListFile;	
 
-		%centromeresFile: File that includes locations of centromeres. A default hg19 file "CNAClassDirectory+/referenceFiles/h19centromeres.txt" is included by default if user doesn't specify one.
+		%centromeresFile: File that includes locations of centromeres. A default hg19 file "CNAClassDirectory+/annotations/hg19/hg19centromeres.bed" is included by default if user doesn't specify one.
 		centromeresFile;
 
-		%telomeresFile: File that includes locations of telomeres. A default hg19 file "CNAClassDirectory+/referenceFiles/h19telomeres.txt" is included by default if user doesn't specify one.
+		%telomeresFile: File that includes locations of telomeres. A default hg19 file "CNAClassDirectory+/annotations/hg19/h19telomeres.bed" is included by default if user doesn't specify one.
 		telomeresFile;
 
 		%outputDirectory: Output directory to save results and figures at.
@@ -47,7 +47,7 @@ classdef CNAtra < handle
 		%ploidyLevel: Expected number of chromosome sets (default = free), user can set it based on input-cell ploidy {'free', 'diploid', 'triploid', 'tetraploid'}.
 		ploidyLevel = 'free'; 
         		
-		%minimumIBsize: A minimum segment size to be considered as Iso-copy numeric block (in Bins), default size = 1Mb.
+		%minimumIBsize: minimum segment size to be considered as Iso-copy numeric block (in Bins), default size = 1Mb.
 		minimumIBsize = 1000;
 
         %resolution: Minimum bin size that is computed using regression model based on the data coverage. We used it as a frame length for Savitzky Golay filter.
@@ -185,12 +185,12 @@ classdef CNAtra < handle
         %A Read-Depth Based Hierarchical Approach to Detect Copy Number Variations in Low-Coverage and Complex Copy Number Profiles.
 	      if nargin == 2
 	         obj.bamFile = rdFile;
-	         obj.blackListFile    = strcat(CNAClassDirectory,'/referenceFiles/wgEncodeDacMapabilityConsensusExcludable.bed');
-	         obj.centromeresFile  = strcat(CNAClassDirectory,'/referenceFiles/h19centromeres.txt');
-	         obj.telomeresFile    = strcat(CNAClassDirectory,'/referenceFiles/h19telomeres.txt');
-	         obj.gapFile          = strcat(CNAClassDirectory,'/referenceFiles/hg19.gaps.bed');
-	         obj.mapMatFile       = strcat(CNAClassDirectory,'/referenceFiles/AnshulMappability/mapTracks.hg19.101.mat');
-	         obj.gcWindsMatFile   = strcat(CNAClassDirectory,'/referenceFiles/ChrisMillerGCs/gcWinds.hg19.readLength100.mat');
+	         obj.blackListFile    = strcat(CNAClassDirectory,'/annotations/hg19/hg19blackListed.bed');
+	         obj.centromeresFile  = strcat(CNAClassDirectory,'/annotations/hg19/hg19centromeres.bed');
+	         obj.telomeresFile    = strcat(CNAClassDirectory,'/annotations/hg19/hg19telomeres.bed');
+	         obj.gapFile          = strcat(CNAClassDirectory,'/annotations/hg19/hg19gaps.bed');
+	         obj.mapMatFile       = strcat(CNAClassDirectory,'/annotations/hg19/AnshulMappability/mapTracks.hg19.101.mat');
+	         obj.gcWindsMatFile   = strcat(CNAClassDirectory,'/annotations/hg19/ChrisMillerGCs/gcWinds.hg19.readLength100.mat');
 	      else
 	         error('No enough inputs')
 	      end
