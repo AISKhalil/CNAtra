@@ -17,7 +17,7 @@ lowerLimit = prctile(data,1);
 upperLimit = prctile(data,99);
 a = data(data>=lowerLimit & data<=upperLimit);
 binnedD = arrayfun(@(k) mean(a(k:k+n-1)),1:n:length(a)-n+1)';% the averaged vector
-[f,l] = hist(binnedD,1000);
+[f,l] = hist(binnedD,100);
 
 scanInterval = l;
 noScanItems = length(scanInterval);

@@ -13,11 +13,11 @@ blackGabPercentageTh = obj.maximumFalseBinsAllowed;%%Allowed region percentage t
 minRegionWidthForTestInBins = 15;
 
 if(obj.removeShortRegions == 1)
-	minRegionSize   = obj.resolution;
-	lowerWidthLimit = minRegionWidthForTestInBins;
+    minRegionSize   = obj.resolution;
+    lowerWidthLimit = min(minRegionWidthForTestInBins,minRegionSize);
 else
-	minRegionSize   = minRegionWidthForTestInBins;% minimum region size to apply the t-test
-	lowerWidthLimit = minRegionSize;
+    minRegionSize   = min(minRegionWidthForTestInBins,minRegionSize);% minimum region size to apply the t-test
+    lowerWidthLimit = minRegionSize;
 end
 
 
