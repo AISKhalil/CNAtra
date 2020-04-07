@@ -10,8 +10,8 @@
 ## Contents
 - [Download](#Download)
 - [Annotations](#Annotations)
-- [CNAtra output at a glance](#CNAtra_Example)
 - [Parameters](#Parameters)
+- [CNAtra output at a glance](#CNAtra_Example)
 - [CNAtraLite](#CNAtraLite)
      
 ### <a name="Download"></a>Download
@@ -35,6 +35,26 @@ For other genome, user can download and build the annotation files.
 - We provided scripts for parsing the mappability and GC tracks [manual annotation](CNAtraTool/annotations/example/example.m). 
 - For other annotation files (centromere.bed, telomere.bed, gap.bed, and blackListed.bed), user can make them using the tab-delimited format (chr name, start-bp, end-bp). Centromoeres' information should be provided for running **CNAtra**, while other files can be empty.
 
+### <a name="Parameters"></a>Parameters
+The main parameters of **CNAtra**.
+please check [CNAtra user manual](CNAtra_User_Guide.pdf) for detailed explaination of CNAtra parameters.
+
+    bamFile                  - the input BAM file (SAM file can be used).
+   
+    ploidyLevel              - the whole-genome ploidy level of the input cell ['free' (default), 'diploid', 
+                             'triploid', and 'tetraploid'].
+ 
+    minimumIBsize            - minimum segment size to be considered as Iso-copy numeric block (in kbs), 
+                             default size = 1000 kb.
+
+    resolution              - the minimum estimated-size of focal alteration based on the data coverage. 
+                            User can manually tune it before before calling the ‘CNVcaller’ module.
+
+    amplificationThreshold  - the threshold for identifying class2 focal amplfications based on the data
+                            coverage. User can manually tune it before before calling the ‘CNVcaller’ module.
+
+    deletionThreshold       - the threshold for identifying class2 focal deletions based on the data
+                            coverage. User can manually tune it before before calling the ‘CNVcaller’ module.                            
 ### <a name="CNAtra_Example"></a>CNAtra output at a glance
 User can run **CNAtra** tool and get the CNA profile quickly using the default parameters and hg19 annotation files if the BAM file is available. We provided the simulated data where we artificially incorporated LCVs and FAs in Chr3 of CHP-212 cell line data as an example for testing the tool installation. Input BAM is available as "CHP212_chr3_Artificial.bam" file under `CNAtraInput/` folder. **CNAtra** outputs are provided in `CNAtraResults/` folder (default output directory). 
 
@@ -68,27 +88,6 @@ save('CNAtraResults/CHP212_WGS.mat');
 chrNumber = 3;
 CNAtraObj.CNAPlot('plot',chrNumber);
 ```
-
-### <a name="Parameters"></a>Parameters
-The main parameters of **CNAtra**.
-please check [CNAtra user manual](CNAtra_User_Guide.pdf) for detailed explaination of CNAtra parameters.
-
-    bamFile                  - the input BAM file (SAM file can be used).
-   
-    ploidyLevel              - the whole-genome ploidy level of the input cell ['free' (default), 'diploid', 
-                             'triploid', and 'tetraploid'].
- 
-    minimumIBsize            - minimum segment size to be considered as Iso-copy numeric block (in kbs), 
-                             default size = 1000 kb.
-
-    resolution              - the minimum estimated-size of focal alteration based on the data coverage. 
-                            User can manually tune it before before calling the ‘CNVcaller’ module.
-
-    amplificationThreshold  - the threshold for identifying class2 focal amplfications based on the data
-                            coverage. User can manually tune it before before calling the ‘CNVcaller’ module.
-
-    deletionThreshold       - the threshold for identifying class2 focal deletions based on the data
-                            coverage. User can manually tune it before before calling the ‘CNVcaller’ module.                            
                   
 ### <a name="CNAtraLite"></a>CNAtraLite
 **CNAtraLite** is a modified version of **CNAtra**. In **CNAtraLite**, we don't include the modules for filtering and correcting the RD signal as well as filtering of the CNA calls. Therefore, it doesn't require any annotation file (only input BAM file). This can be used for identifying the CNAs if the annotation files are not available.
