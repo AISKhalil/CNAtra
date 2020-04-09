@@ -132,10 +132,7 @@ hold on;
 plot(plotIndices, clippedData(plotIndices),'LineStyle','none','Marker','.','Color', [0.4 0.4 0.4]);
 % Segments CN vector
 plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',4);
-
 legend('Read depth', 'Copy number');   
- 
-plot(plotIndices, segmentsCNVector(plotIndices),'r','lineWidth',2);
 
 ylim([-0.5,maxCN]);
 ylabel('Estimated copy number');

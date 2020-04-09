@@ -174,15 +174,15 @@ plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',4);
 % Centromeres & Telomeres
 centroTelo = centroTeloLocations(:);
 
-    legend('Read-Depth', 'Filtered-bins', 'Segments Copy-Number');   
-    for j =1:length(centroTelo)
-    linePt = centroTelo(j); 
-       if (linePt >= plotStart && linePt <= plotEnd);
-          plot([linePt,linePt],[0,5],'Color','g','LineWidth',3);   
-          legend('Read-Depth', 'Filtered-bins', 'Segments Copy-Number', 'Centromeres-Telomeres');
-       end
-    end    
-plot(plotIndices, segmentsCNVector(plotIndices),'r','lineWidth',2);
+legend('Read-Depth', 'Filtered-bins', 'Segments Copy-Number');   
+for j =1:length(centroTelo)
+linePt = centroTelo(j); 
+   if (linePt >= plotStart && linePt <= plotEnd);
+      plot([linePt,linePt],[0,5],'Color','g','LineWidth',3);   
+      legend('Read-Depth', 'Filtered-bins', 'Segments Copy-Number', 'Centromeres-Telomeres');
+   end
+end    
+
 
 ylim([-0.5,maxCN]);
 ylabel('Estimated copy number');

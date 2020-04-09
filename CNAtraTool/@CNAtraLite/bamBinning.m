@@ -60,15 +60,25 @@ remove(obj.chrNames,1);
 obj.chrLengths = containers.Map({1},{[]});
 remove(obj.chrLengths,1);
 %
+noNumericChr = 0;
+for j = 1:length(chrNames)
+    chrName = cell2mat(chrNames(j));
+    chrIndex = str2num(chrName(4:end));
+    if(~(isempty(chrIndex)))
+        noNumericChr = noNumericChr + 1;
+    end
+end
+%
 targetChrs = [];
 for j = 1:length(chrNames)
     chrName = cell2mat(chrNames(j));
     chrIndex = str2num(chrName(4:end));
     if(isempty(chrIndex))
-        targetChrs = [targetChrs;23];
-        obj.chrLengths(23) = chrLengths(j);
-        obj.chrNames(23) = chrName;
-
+        noNumericChr = noNumericChr + 1;
+        chrIndex = noNumericChr;
+        targetChrs = [targetChrs;chrIndex];
+        obj.chrLengths(chrIndex) = chrLengths(j);
+        obj.chrNames(chrIndex) = chrName;
     else
         targetChrs = [targetChrs;chrIndex];
         obj.chrLengths(chrIndex) = chrLengths(j);
