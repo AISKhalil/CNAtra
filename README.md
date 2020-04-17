@@ -2,7 +2,7 @@
 
 **CNAtra** is a MATLAB-based tool that accepts BAM/SAM files as input. It can handle both single-end and paired-end WGS reads. **CNAtra** pipeline has two modules: 1. Read depth calculator that computes, filter and normalized the RD signal,  and 2. CNV caller that identifies the copy number alterations at different length scales. **CNAtra** generates many output files providing the detailed characterization of the copy number profile of the input data. It saves BED format files of both large-scale copy number variations (LCVs) and focal alterations (FAs) that can be uploaded into UCSC Genome Browser. In addition, **CNAtra** incorporates a visual platform that allows manual review of the CNV profile and its accessory information such as the mappability score. 
 
-**For a full description of the method and applications, please visit [CNAtra Manuscript](https://www.biorxiv.org/content/10.1101/639294v1).**
+**For a full description of the method and applications, please visit [CNAtra Manuscript](https://rdcu.be/b3Cki).**
 
 **The detailed description of CNAtra software (inputs, parameters, methods, and outputs) is provided in [CNAtra user manual](CNAtra_User_Guide.pdf).**
 
