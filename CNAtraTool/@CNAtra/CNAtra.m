@@ -236,10 +236,13 @@ classdef CNAtra < handle
 		[regionCN] = CNAEstimator(obj, varargin)
 
 		%Ploidy-Test
-		ploidyTest(obj)
+		ploidyTest(obj, saveResult)
 
 		%Plot genome RD signal
-		plotGenome(obj, binSize)
+		plotGenome(obj, saveResult, nBinSize)
+
+		%Plot genome RD histogram
+		plotGenomeHistogram(obj, saveResult, nBinSize)
 
     end
     %%% 

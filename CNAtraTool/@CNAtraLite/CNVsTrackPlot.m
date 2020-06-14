@@ -131,11 +131,11 @@ hold on;
     %Data
 plot(plotIndices, clippedData(plotIndices),'LineStyle','none','Marker','.','Color', [0.4 0.4 0.4]);
 % Segments CN vector
-plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',4);
+plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',3);
 legend('Read depth', 'Copy number');   
 
 ylim([-0.5,maxCN]);
-ylabel('Estimated copy number');
+ylabel('Copy number');
 xlabel('bin Number');
 title(targetChr);
 hold off;

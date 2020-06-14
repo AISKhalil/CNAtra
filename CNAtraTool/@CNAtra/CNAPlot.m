@@ -159,9 +159,8 @@ else
 	figure;
 	set(gcf, 'Position', get(0, 'Screensize'));
 end
-    %subplot(3,1,[1,2]);
 hold on;
-    %Data
+%
 plot(plotIndices, clippedData(plotIndices),'LineStyle','none','Marker','.', 'MarkerSize', 4,'Color', [0.4 0.4 0.4]);
 %Amplification and deletion data
 plot(plotIndices, regionsCNData(plotIndices),'b.','MarkerSize',3);
@@ -184,7 +183,7 @@ plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',3);
     end    
 
 ylim([-0.5,maxCN]);
-ylabel('Estimated copy number');
+ylabel('Copy number');
 xlabel('bin Number');
 title(targetChr);
 hold off;

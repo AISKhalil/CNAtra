@@ -170,7 +170,7 @@ plot(plotIndices, clippedData(plotIndices),'LineStyle','none','Marker','.','Colo
 %Gap data
 plot(plotIndices, regionsBlackGapData(plotIndices),'k.','MarkerSize',4);
 % Segments CN vector
-plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',4);
+plot(plotIndices, segmentsCNVector(plotIndices),'k','lineWidth',3);
 % Centromeres & Telomeres
 centroTelo = centroTeloLocations(:);
 
@@ -185,7 +185,7 @@ end
 
 
 ylim([-0.5,maxCN]);
-ylabel('Estimated copy number');
+ylabel('Copy number');
 xlabel('bin Number');
 title(targetChr);
 hold off;

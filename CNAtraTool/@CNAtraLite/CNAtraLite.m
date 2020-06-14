@@ -147,8 +147,14 @@ classdef CNAtraLite < handle
 		CNAPlot(obj, saveResult, varargin)
 		CNVsTrackPlot(obj, saveResult, varargin) 
 		
+		%Ploidy-Test
+		ploidyTest(obj, saveResult)
+
 		%Plot genome RD signal
-		plotGenome(obj, binSize)
+		plotGenome(obj, saveResult, nBinSize)
+
+		%Plot genome RD histogram
+		plotGenomeHistogram(obj, saveResult, nBinSize)
 
     end
     %%% 
