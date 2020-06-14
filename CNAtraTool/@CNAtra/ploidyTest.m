@@ -37,8 +37,6 @@ binSize = 1;%1Kb
 
 
 %% ---------- Interval --------------%%
-figure;
-hold on; 
 totalIBs = 0;
 maxWidth = 0;
 for i=1:length(selectedChrs)
