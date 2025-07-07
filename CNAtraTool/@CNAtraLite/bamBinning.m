@@ -18,9 +18,9 @@ remove(obj.chrRawDictionary,1);
 %%%%%%%-------- chromosome Names & Lengths ------%%%%%%%
 [~, ~, extension] = fileparts(rdFile);
 if strcmp(extension,'.bam')
-    fileInfo= baminfo(rdFile,'ScanDictionary', 'true', 'numofreads', 'true');%%
+    fileInfo= baminfo(rdFile,'ScanDictionary', true, 'numofreads', true);%%
 else
-    fileInfo= saminfo(rdFile,'ScanDictionary', 'true', 'numofreads', 'true');%% 
+    fileInfo= saminfo(rdFile,'ScanDictionary', true, 'numofreads', true);%% 
 end
 chrLengthsBAM = [fileInfo.SequenceDictionary.SequenceLength];
 chrNamesBAM   = [fileInfo.ScannedDictionary];
